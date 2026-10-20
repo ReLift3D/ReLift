@@ -1,0 +1,16 @@
+# The released checkpoint's training run (research name regress_clean_v1), arguments verbatim from the checkpoint.
+run: regress_clean_v1
+mode: regress_clean
+dim: 384
+depth: 8
+batch: 16
+lr: 3.0e-4
+hours: 9.0            # wall-clock budget; the cosine schedule is indexed by elapsed training time (paper App. A.3)
+max_steps: 0          # 0 = time budget.  150436 reproduces the released run's step count on other hardware (deviation)
+val_every: 1000
+workers: 5
+spike_guard: false    # the released run used --no_spike_guard
+ckpt_act: false
+qk_norm: false
+data: v1              # PointOdyssey training windows (strides 1 and 2); split: drop cab_e_ego2, validation names[6::13]
+input: synthetic      # the simulated lift of corrupt.py

@@ -1,0 +1,25 @@
+# Settings of the five front ends, exactly as the published windows were built.  Weights: configs/weights.yaml.
+da3:                              # Depth Anything 3: depth, intrinsics, camera-from-world poses; defines the working grid
+  process_res: 504                # long side 504 -> 504x280 on the 16:9 subsets, 504x504 on ADT
+  process_res_method: upper_bound_resize
+  ref_view_strategy: saddle_balanced
+  decoder: opencv                 # frames decoded by 4RC's clip loader (OpenCV), never changed
+alltracker:                       # dense 2-D tracks of every grid pixel on DA3's processed frames
+  window: 16                      # Net(16), full-sequence forward
+  iters: 4
+  decoder: opencv                 # (the DA3-processed frames)
+vggto:                            # VGGT-Omega, "balanced" loader at 512, resampled to the DA3 grid
+  resolution: 512
+  patch: 16
+  decoder: opencv
+rc4:                              # 4RC as a geometry provider (its evaluation settings), resampled to the DA3 grid
+  size: 512
+  patch_size: 14
+  crop: false
+  square_ok: true
+  decoder: opencv
+cowtracker:                       # one joint pass, fp16, at the largest 112-multiple size within max_pixels
+  max_pixels: 240000              # -> 336x672 (16:9), 448x448 (ADT)
+  dtype: fp16
+  attention: sdpa                 # torch scaled_dot_product_attention (the research runs' path on Blackwell GPUs)
+  decoder: pillow                 # frames decoded by Pillow from the clip's JPEG bytes, never changed

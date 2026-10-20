@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "Citation TBD: the arXiv entry will be added when the paper is online."
+title: "ReLift: Dense 3D Tracking as Trajectory Repair"
+type: software
+license: MIT
+repository-code: "https://github.com/MarounKhriesh/ReLift"
+authors:
+  - family-names: Singer
+    given-names: Assaf
+  - family-names: Khriesh
+    given-names: Maroun
+  - family-names: Rotstein
+    given-names: Noam
+  - family-names: Kasten
+    given-names: Yoni
+  - family-names: Litany
+    given-names: Or

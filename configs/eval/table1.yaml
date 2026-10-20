@@ -1,0 +1,22 @@
+# Table 1 of the paper: the six corrector rows under 4RC's 84-frame protocol on the 200 WorldTrack clips.
+num_frames: 84
+subsets: [adt, pstudio, po, ds]
+rows:                                     # <tracker>_<geometry>; one corrector checkpoint serves every combination
+  - {tracker: alltracker, geometry: da3}
+  - {tracker: alltracker, geometry: vggto}
+  - {tracker: alltracker, geometry: rc4}
+  - {tracker: cowtracker, geometry: da3}
+  - {tracker: cowtracker, geometry: vggto}
+  - {tracker: cowtracker, geometry: rc4}
+corrector:
+  checkpoint: released_checkpoint.pt  # under checkpoints_root
+  vis_gate: 0.85                          # observed = tracker visibility > gate and valid range
+  group: 1024                             # tracks per group
+  batch: 8                                # groups per forward pass
+  seed: 0                                 # the CUDA generator that shuffles the pixels into groups
+trackers:
+  alltracker: {vis_tau: null}             # visibility used as is
+  cowtracker: {vis_tau: 0.65}             # remapped so that raw > 0.65 <=> remapped > 0.85 (calibrated, App. A.1)
+scoring:
+  seed_ransac: true                       # per-clip seeds for the 16,384-point sample and the RANSAC draws
+  alignments: [sim3, global]              # Table 1 reports sim3
