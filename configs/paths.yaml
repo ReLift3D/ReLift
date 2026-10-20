@@ -1,0 +1,6 @@
+# Default roots, relative to the repository.  Override any key with the environment variable RELIFT_<KEY>
+# (e.g. RELIFT_DATA_ROOT=/mnt/big/relift_data) or with the corresponding command-line flag.
+data_root: data                # WorldTrack clips, PointOdyssey annotations
+cache_root: cache              # prepared windows (tracks + geometry per clip), training windows
+checkpoints_root: checkpoints  # our corrector and the third-party weights
+outputs_root: outputs          # predictions, scores, tables

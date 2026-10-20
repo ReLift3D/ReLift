@@ -1,0 +1,19 @@
+"""Paths: ``configs/paths.yaml`` relative to the repository, overridable by environment variables and CLI flags."""
+import os
+from pathlib import Path
+
+import yaml
+
+REPO = Path(__file__).resolve().parents[1]
+KEYS = ("data_root", "cache_root", "checkpoints_root", "outputs_root")
+
+
+def paths(overrides=None):
+    """Resolved absolute paths.  Precedence: explicit overrides > RELIFT_<KEY> environment variables > paths.yaml."""
+    cfg = yaml.safe_load(open(REPO / "configs" / "paths.yaml")) or {}
+    out = {}
+    for k in KEYS:
+        v = (overrides or {}).get(k) or os.environ.get(f"RELIFT_{k.upper()}") or cfg.get(k, k.split("_")[0])
+        p = Path(os.path.expanduser(str(v)))
+        out[k] = p if p.is_absolute() else REPO / p
+    return out

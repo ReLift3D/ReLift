@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "relift"
+version = "0.1.0"
+description = "ReLift: a learned corrector for lifted dense 2-D tracks"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = [
+    "torch>=2.4",
+    "torchvision",
+    "numpy>=1.26",
+    "opencv-python-headless",
+    "pillow",
+    "scipy",
+    "tqdm",
+    "pyyaml",
+    "matplotlib",          # imported by 4RC's clip loader
+    "huggingface_hub",
+    "safetensors",
+    "einops",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[tool.setuptools.packages.find]
+include = ["relift*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = ["gpu: needs a CUDA device (and, for some tests, local data or weights)"]

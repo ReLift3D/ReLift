@@ -1,0 +1,20 @@
+# data, caches, weights and outputs live outside version control (the default roots of configs/paths.yaml)
+/data/
+/cache/
+/checkpoints/
+/outputs/
+
+*.pt
+*.pth
+*.npz
+*.safetensors
+!tests/fixtures/*.npz
+!tests/fixtures/*.pt
+
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+build/
+dist/
+.DS_Store
