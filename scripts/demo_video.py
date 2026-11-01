@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Run ReLift on a video: every pixel of the first frame -> its corrected 3-D trajectory through the clip.
 
-    python scripts/demo_video.py assets/demo/kangaroo.mp4 [--out DIR] [--num_frames 84] [--geometry da3|vggto]
+    python scripts/demo_video.py assets/demo/cartwheel.mp4 [--out DIR] [--num_frames 84] [--geometry da3|vggto]
                                  [--checkpoint PATH] [--checkpoints_root DIR] [--device cuda]
 
 VIDEO is a video file (anything OpenCV decodes) or a directory of image frames (sorted by name).  The pipeline is the

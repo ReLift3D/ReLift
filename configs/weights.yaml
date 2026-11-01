@@ -2,7 +2,7 @@
 # (directories relative to checkpoints_root).  Revisions are the ones the published numbers were produced with.
 relift:
   kind: url
-  url: https://github.com/MarounKhriesh/ReLift/releases/download/v1.0/released_checkpoint.pt
+  url: https://github.com/ReLift3D/ReLift/releases/download/v1.0/released_checkpoint.pt
   file: released_checkpoint.pt
   md5: 644f9f922842adce42c9854d341e3707
   licence: MIT
@@ -12,7 +12,8 @@ da3:
   revision: b2359bdf726fb44ef62acca04d629dcf158053e7
   dir: da3
   md5_model_safetensors: 4e54bf75031acc19cf210d3423a3954a
-  licence: Apache-2.0
+  licence: CC BY-NC-4.0 (non-commercial)   # DA3's *code* is Apache-2.0, but this checkpoint's model card is
+                                           # cc-by-nc-4.0; only DA3's small/base/metric models are Apache-2.0
 alltracker:
   kind: hf_file
   repo: aharley/alltracker
@@ -24,7 +25,7 @@ rc4:
   kind: hf_snapshot
   repo: Luo-Yihang/4RC
   revision: 3634b324abb16634a527987c8efa212e392a1449
-  dir: 4rc
+  dir: rc4
   md5_model_safetensors: 692a9c77badc0927c2cb8ae8e569454f
   licence: S-Lab License 1.0 (non-commercial)
 cowtracker:
@@ -34,7 +35,7 @@ cowtracker:
   revision: 860b85cfb3a63b91780535689c262b3e595b6082
   dir: cowtracker
   md5: 89953c3be50b5b47129e02107a26f1ba
-  licence: FAIR Noncommercial Research License
+  licence: FAIR Noncommercial Research License   # the weight card itself says cc-by-nc-4.0
   gated: false                   # downloaded without a token on 2026-10-12; the licence still applies
 vggt_omega:
   kind: hf_file

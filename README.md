@@ -1,13 +1,53 @@
-# ReLift: Dense 3D Tracking as Trajectory Repair
+<h1 align="center">ReLift</h1>
+<h2 align="center">Dense 3D Tracking as Lifted Trajectory Repair</h2>
 
-ReLift turns a dense 2-D point tracker and a video geometry model into 3-D trajectories of every pixel: the tracked
+<p align="center">
+  <a href="https://assafsinger94.github.io/">Assaf Singer</a><sup>&dagger;</sup> &middot;
+  <a href="https://www.linkedin.com/in/maroun-khriesh-1451b4216/">Maroun Khriesh</a><sup>&dagger;</sup> &middot;
+  <a href="https://rotsteinnoam.github.io/">Noam Rotstein</a> &middot;
+  <a href="https://ykasten.github.io/">Yoni Kasten</a> &middot;
+  <a href="https://orlitany.github.io/">Or Litany</a>
+</p>
+<p align="center"><sup>&dagger;</sup> Equal contribution</p>
+
+<!-- TODO: fill the arXiv and paper hrefs once the paper is online. -->
+<p align="center">
+  <a href="https://relift3d.github.io/">
+    <img src="assets/logo_page.svg" alt="Project Page" width="125">
+  </a>
+  <a href="#">
+    <img src="assets/logo_arxiv.svg" alt="Arxiv" width="125">
+  </a>
+  <a href="#">
+    <img src="assets/logo_paper.svg" alt="Paper" width="125">
+  </a>
+</p>
+
+<div align="center">
+  <img src="assets/teaser.gif" width="720" alt="Input video (left) and the 3D tracks (right)" /><br/>
+  <b>Input video</b>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;<b>3D tracks</b>
+</div>
+
+<br>
+
+ReLift turns a dense 2D point tracker and a video 3D geometry model into 3-D trajectories of every pixel: the tracked
 pixels are lifted along their camera rays at the predicted depth, and a small transformer, the corrector, repairs
 and completes the lifted trajectories. One released checkpoint serves every tracker / geometry combination.
+
+## Table of Contents
+
+- [Setup](#setup)
+- [Demo](#demo)
+- [Training](#training)
+- [Evaluation](#evaluation)
+- [Repository layout](#repository-layout)
+- [Licence](#licence)
+- [Citation](#citation)
 
 ## Setup
 
 ```
-git clone --recurse-submodules https://github.com/MarounKhriesh/ReLift.git
+git clone --recurse-submodules https://github.com/ReLift3D/ReLift.git
 cd ReLift
 bash scripts/setup.sh                  # conda environment "relift" + the five front ends (submodules)
 conda activate relift
@@ -15,21 +55,25 @@ python scripts/download_weights.py     # all weights into checkpoints/, md5-chec
 ```
 
 Requires Linux, conda and a CUDA GPU (24 GB; CoWTracker needs 48 GB). VGGT-Omega's weights are **gated** on
-Hugging Face: request access on https://huggingface.co/facebook/VGGT-Omega, then `huggingface-cli login` (or set
-`HF_TOKEN`) and rerun the download. VGGT-Omega, CoWTracker and 4RC are released under non-commercial licences.
+Hugging Face: request access on https://huggingface.co/facebook/VGGT-Omega, then `hf auth login` (or set
+`HF_TOKEN`) and rerun the download. VGGT-Omega, CoWTracker, 4RC and the Depth Anything 3 checkpoint are released under
+non-commercial licences.
 
 ## Demo
 
 ```
-python scripts/demo_video.py assets/demo/kangaroo.mp4        # any video file or directory of frames
+python scripts/demo_video.py assets/demo/cartwheel.mp4        # any video file or directory of frames
 ```
 
 Runs Depth Anything 3 and AllTracker on the first 84 frames, lifts every pixel of frame 0 and corrects it. Writes
-`outputs/demo/kangaroo/tracks.npz` (`xyz` (T,H,W,3): the 3-D trajectory of every pixel in the frame-0 camera's
+`outputs/demo/cartwheel/tracks.npz` (`xyz` (T,H,W,3): the 3-D trajectory of every pixel in the frame-0 camera's
 coordinates, plus the raw lift, the observation mask and the cameras) and `tracks.mp4` (raw lift left, ReLift
 right). `--geometry vggto` uses VGGT-Omega instead of Depth Anything 3.
 
 ## Training
+
+<details>
+<summary>Prepare the PointOdyssey windows and train the corrector</summary>
 
 Data: the annotation files of the official PointOdyssey training split
 (`train.tar.gz`, from which only `<scene>/anno.npz` is needed), extracted to `data/pointodyssey/train/<scene>/anno.npz`.
@@ -42,7 +86,12 @@ python scripts/train.py --run my_run                    # the released recipe ->
 python scripts/export_checkpoint.py outputs/runs/my_run/final.pt checkpoints/my_run.pt
 ```
 
+</details>
+
 ## Evaluation
+
+<details>
+<summary>Download WorldTrack, run the front ends and the corrector, print Table 1</summary>
 
 Data: the 200 WorldTrack clips (ADT, Panoptic Studio, PointOdyssey, Dynamic Replica; 50 each), downloaded and
 md5-checked by the first command. Then the front ends, the corrector and the scorer; the last command prints the
@@ -51,7 +100,8 @@ results table (APD3D, the layout of Table 1 of the paper).
 ```
 python scripts/download_worldtrack.py                                                 # -> data/worldtrack/
 python scripts/prepare_worldtrack.py --geometry da3 vggto rc4 --tracker alltracker
-python scripts/prepare_worldtrack.py --geometry --tracker cowtracker                  # own invocation (needs 48 GB)
+python scripts/prepare_worldtrack.py --geometry --tracker cowtracker                  # own invocation (needs 48 GB);
+                                                                                      # empty --geometry reuses the geometry above
 python scripts/run_corrector.py [--checkpoint checkpoints/my_run.pt]                  # the six tracker / geometry rows
 python scripts/score.py --variants alltracker_da3 alltracker_vggto alltracker_rc4 cowtracker_da3 cowtracker_vggto cowtracker_rc4
 python scripts/make_table1.py
@@ -59,9 +109,28 @@ python scripts/make_table1.py
 
 Every GPU script takes `--shard i --nshards n` and skips finished clips.
 
-## Licence and citation
+</details>
 
-Our code is MIT (`LICENSE`); the front ends under `third_party/` keep their own licences.
+## Repository layout
 
-Citation: TBD (the arXiv entry will be added when the paper is online). Authors: Assaf Singer, Maroun Khriesh,
-Noam Rotstein, Yoni Kasten, Or Litany.
+| Path | What it holds |
+|---|---|
+| `relift/` | The package: the corrector (`model.py`, `train.py`), the lift (`rays.py`), the five front-end wrappers (`providers/`), scoring (`eval/`) |
+| `scripts/` | Every entry point: setup, downloads, demo, data preparation, training, inference, scoring |
+| `configs/` | Paths, provider settings, weight sources with pinned revisions and md5s, the training recipe |
+| `manifests/` | The WorldTrack file ids and md5s used by `download_worldtrack.py` |
+| `third_party/` | The five front ends, as git submodules — no third-party code is vendored into this repository |
+| `tests/` | CPU unit tests (run in CI) and GPU tests that need weights and a clip |
+
+Data, caches, weights and outputs live outside version control, under the roots in `configs/paths.yaml`; override
+any of them with `RELIFT_<KEY>` (e.g. `RELIFT_DATA_ROOT=/mnt/big/relift_data`) or the matching command-line flag.
+
+## Licence
+
+Our code is MIT (`LICENSE`); the front ends under `third_party/` keep their own licences, and four of the five
+are non-commercial — see [`third_party/README.md`](third_party/README.md).
+`configs/weights.yaml` records the licence, source and md5 of every weight the pipeline downloads.
+
+## Citation
+
+TBD — the arXiv entry will be added when the paper is online.

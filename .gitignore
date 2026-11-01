@@ -18,3 +18,18 @@ __pycache__/
 build/
 dist/
 .DS_Store
+
+# the teaser source clips (the committed teaser is assets/teaser.gif)
+/assets/*.mp4
+
+# scratch copies of the README kept for comparison
+/ReLift_README_BEFORE.md
+
+# archives dropped into the working tree (logo packs, submission bundles, downloads)
+*.zip
+*.tar
+*.tar.gz
+
+# editor and tooling directories
+.vscode/
+.idea/

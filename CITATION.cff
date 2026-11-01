@@ -1,9 +1,9 @@
 cff-version: 1.2.0
 message: "Citation TBD: the arXiv entry will be added when the paper is online."
-title: "ReLift: Dense 3D Tracking as Trajectory Repair"
+title: "ReLift: Dense 3D Tracking as Lifted Trajectory Repair"
 type: software
 license: MIT
-repository-code: "https://github.com/MarounKhriesh/ReLift"
+repository-code: "https://github.com/ReLift3D/ReLift"
 authors:
   - family-names: Singer
     given-names: Assaf

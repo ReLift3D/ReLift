@@ -4,7 +4,7 @@
     python scripts/download_weights.py [--only da3 alltracker ...] [--checkpoints_root DIR]
 
 VGGT-Omega is gated on Hugging Face (CoWTracker was not at the time of writing, but may become so): request access
-on the model page, then log in once with `huggingface-cli login` (or set HF_TOKEN) and rerun.  A fine-grained token
+on the model page, then log in once with `hf auth login` (or set HF_TOKEN) and rerun.  A fine-grained token
 must have the "read gated repositories" permission.  Files already present and matching the
 recorded md5 are skipped.  The corrector checkpoint is fetched from the release asset URL in the config, or you may
 place the file under <checkpoints_root> yourself.
@@ -79,7 +79,7 @@ if __name__ == "__main__":
         except Exception as e:  # noqa: BLE001
             msg = str(e).splitlines()[0][:160]
             if name in ACCESS and ("401" in msg or "403" in msg or "gated" in msg.lower() or "GatedRepo" in type(e).__name__):
-                print(f"{name:12s} ACCESS REQUIRED: request access at {ACCESS[name]}, then `huggingface-cli login` and rerun", flush=True)
+                print(f"{name:12s} ACCESS REQUIRED: request access at {ACCESS[name]}, then `hf auth login` and rerun", flush=True)
             else:
                 print(f"{name:12s} FAILED: {msg}", flush=True)
             failed.append(name)

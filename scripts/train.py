@@ -5,7 +5,7 @@
     python scripts/train.py --run my_run --max_steps 150436   # step-indexed instead (other hardware; a deviation)
     python scripts/train.py --run smoke --overfit --max_steps 600 --workers 0     # sanity: one batch, loss collapses
 
-Every setting comes from the config (configs/train/regress_clean_v1.yaml, the released run's arguments) and can be
+Every setting comes from the config (configs/train/corrector.yaml, the released run's arguments) and can be
 overridden on the command line.  Outputs in <runs_root>/<run>/: split.json, train.csv (every 50 steps), val.jsonl
 (every --val_every steps), last.pt (resumed automatically on restart), step_*.pt every 10 validations, final.pt,
 provenance.json.  ``last.pt``/``final.pt`` are training checkpoints (model, EMA, optimiser); run_corrector.py loads
@@ -35,7 +35,7 @@ from relift.model import IN_FEATS, Corrector  # noqa: E402
 from relift.provenance import machine  # noqa: E402
 from relift.train import LENGTHS, VAL_PER_SCENE, Windows, ema_update, loss_fn, lr_at, make_batch, validate  # noqa: E402
 
-CONFIG = REPO / "configs" / "train" / "regress_clean_v1.yaml"
+CONFIG = REPO / "configs" / "train" / "corrector.yaml"
 VAL_KEYS = ("obs", "hid", "hid_dyn", "vel_hid_dyn")
 
 
@@ -77,7 +77,7 @@ def main():
     sp = os.path.join(out, "split.json")
     if os.path.exists(sp):                                                                  # a resumed run keeps ITS split
         s = json.load(open(sp)); train_names, val_names = s["train"], s["val"]
-    json.dump(dict(train=train_names, val=val_names, excluded=sorted(EXCLUDE), data=cfg.get("data", "v1"), input="synthetic"),
+    json.dump(dict(train=train_names, val=val_names, excluded=sorted(EXCLUDE), data=cfg.get("data", "pointodyssey_strides_1_2"), input="synthetic"),
               open(sp, "w"), indent=1)
     if a.overfit:
         train_names = train_names[:2]

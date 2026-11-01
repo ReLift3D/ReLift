@@ -1,5 +1,5 @@
-# The released checkpoint's training run (research name regress_clean_v1), arguments verbatim from the checkpoint.
-run: regress_clean_v1
+# The released checkpoint's training run, arguments verbatim from the checkpoint.
+run: corrector
 mode: regress_clean
 dim: 384
 depth: 8
@@ -12,5 +12,5 @@ workers: 5
 spike_guard: false    # the released run used --no_spike_guard
 ckpt_act: false
 qk_norm: false
-data: v1              # PointOdyssey training windows (strides 1 and 2); split: drop cab_e_ego2, validation names[6::13]
+data: pointodyssey_strides_1_2  # PointOdyssey training windows (strides 1 and 2); split: drop cab_e_ego2, validation names[6::13]
 input: synthetic      # the simulated lift of corrupt.py

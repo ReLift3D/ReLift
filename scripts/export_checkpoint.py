@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 """Training checkpoint -> release checkpoint (EMA weights only, with the constructor config and provenance).
 
-    python scripts/export_checkpoint.py runs/regress_clean_v1/final.pt checkpoints/released_checkpoint.pt
+    python scripts/export_checkpoint.py runs/corrector/final.pt checkpoints/released_checkpoint.pt
 """
 import argparse
 import os
