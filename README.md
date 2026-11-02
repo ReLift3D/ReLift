@@ -10,15 +10,14 @@
 </p>
 <p align="center"><sup>&dagger;</sup> Equal contribution</p>
 
-<!-- TODO: fill the arXiv and paper hrefs once the paper is online. -->
 <p align="center">
   <a href="https://relift3d.github.io/">
     <img src="assets/logo_page.svg" alt="Project Page" width="125">
   </a>
-  <a href="#">
+  <a href="https://arxiv.org/abs/2610.42136">
     <img src="assets/logo_arxiv.svg" alt="Arxiv" width="125">
   </a>
-  <a href="#">
+  <a href="https://arxiv.org/pdf/2610.42136">
     <img src="assets/logo_paper.svg" alt="Paper" width="125">
   </a>
 </p>
@@ -133,4 +132,14 @@ are non-commercial — see [`third_party/README.md`](third_party/README.md).
 
 ## Citation
 
-TBD — the arXiv entry will be added when the paper is online.
+```bibtex
+@misc{singer2026relift,
+      title={ReLift: Dense 3D Tracking as Lifted Trajectory Repair},
+      author={Assaf Singer and Maroun Khriesh and Noam Rotstein and Yoni Kasten and Or Litany},
+      year={2026},
+      eprint={2610.42136},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2610.42136}
+}
+```

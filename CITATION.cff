@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "Citation TBD: the arXiv entry will be added when the paper is online."
+message: "If you use this software, please cite the paper below."
 title: "ReLift: Dense 3D Tracking as Lifted Trajectory Repair"
 type: software
 license: MIT
@@ -15,3 +15,20 @@ authors:
     given-names: Yoni
   - family-names: Litany
     given-names: Or
+preferred-citation:
+  type: article
+  title: "ReLift: Dense 3D Tracking as Lifted Trajectory Repair"
+  year: 2026
+  journal: "arXiv preprint arXiv:2610.42136"
+  url: "https://arxiv.org/abs/2610.42136"
+  authors:
+    - family-names: Singer
+      given-names: Assaf
+    - family-names: Khriesh
+      given-names: Maroun
+    - family-names: Rotstein
+      given-names: Noam
+    - family-names: Kasten
+      given-names: Yoni
+    - family-names: Litany
+      given-names: Or
